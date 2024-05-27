@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application de Gestion de Vente</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fcfcfc; /* Light gray background */
+            color: #000000; /* Dark gray text */
+            font-family: cursive; /* Specify font family */
+        }
+        h1, h3, h4 {
+            text-align: center;
+            color: #666; /* Medium gray headings */
+        }
+        .product-card {
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .product-card:hover {
+            background-color: #e0e0e0; /* Lighter gray on hover */
+        }
+        .product-img {
+            height: 150px;
+            object-fit: cover;
+        }
+        .quantity-input {
+            width: 60px;
+        }
+        #headerNav {
+            background-color: #ff3d00; /* Orange navbar background */
+        }
+        .navbar-nav .nav-link {
+            color: #fff; /* White navigation links */
+        }
+        .navbar-nav .nav-link:hover {
+            color: #ffcc80; /* Lighter orange on hover */
+        }
+        #cart {
+            color: #333; /* Dark gray text for cart items */
+        }
+        #total {
+            color: #4CAF50; /* Green color for total price */
+        }
+        #cancel {
+            background-color: #f44336; /* Red color for cancel button */
+            color: #fff; /* White text on cancel button */
+        }
+        #cancel:hover {
+            background-color: #d32f2f; /* Darker red on hover */
+        }
+        #checkout {
+            background-color: #4CAF50; /* Green color for checkout button */
+            color: #fff; /* White text on checkout button */
+        }
+        #checkout:hover {
+            background-color: #388e3c; /* Darker green on hover */
+        }
+        .dark-mode {
+    background-color: #222; /* Dark background color */
+    color: #000000; /* Light text color */
+}
+.left-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 130px;
+            background-color:  #d32f2f; /* Orange navbar background */
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="left-navbar navbar-dark p-3 bg-danger">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link mx-2 active" aria-current="page" href="#">ayCake</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mx-2" href="#">Products</a>
+            </li>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mx-2" href="#">Pricing</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link mx-2 " href="#" id="navbarDropdownMenuLink" role="button" >
+                    about
+                </a>
+            </li>
+        </ul>
+        
+    </div>
+
+    <div class="container ml-auto">
+        <nav class="navbar navbar-expand-lg navbar-dark p-3 bg-danger" id="headerNav">
+            <div class="container-fluid">
+                
+            
+        
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link mx-2 active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="#">Products</a>
+                        </li>
+                        <li class="nav-item d-none d-lg-block">
+                            <a class="nav-link mx-2" href="#">
+                                ayCake
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="#">Pricing</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link mx-2 " href="#" id="navbarDropdownMenuLink" role="button" >
+                                about
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="navbar-nav">
+                        <a class="nav-link" href="#" onclick="toggleDarkMode()"><i class="fas fa-moon"></i></a>
+                        <a class="nav-link" href="#" onclick="toggleLightMode()"><i class="fas fa-sun"></i></a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    
+    
+    <div class="container">
+        <h1 class="my-4 text-center">
+            <span style="font-size: 1 em; color: #4CAF50;">Caisse</span>
+            <span style="font-size: 1 em; color: #FFC107;">de</span>
+            <span style="font-size: 1 em; color: #2196F3;">Vente</span>
+        </h1>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="text-center">
+                    <h3 style="color: #4CAF50; font-weight: bold;">Produits</h3>
+                    <h3 style="color: #FFC107; font-weight: bold;">Disponibles</h3>
+                </div>
+                <br><br>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card product-card" data-name="Noisette" data-price="67.00">
+                            <img src="../img/Noisette.jpeg" class="card-img-top product-img" alt="Noisette">
+                            <div class="card-body">
+                                <h5 class="card-title">Noisette</h5>
+                                <p class="card-text">67.00 AED</p>
+                                <input type="number" class="form-control quantity-input" placeholder="Quantité" min="1" value="1">
+                                <button class="btn btn-primary add-to-cart mt-2">Ajouter au Panier</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card product-card" data-name="Strawberry Shortcake" data-price="67.00">
+                            <img src="../img/Strawberry Shortcake.jpeg" class="card-img-top product-img" alt="Strawberry Shortcake">
+                            <div class="card-body">
+                                <h5 class="card-title">Strawberry Shortcake</h5>
+                                <p class="card-text">67.00 AED</p>
+                                <input type="number" class="form-control quantity-input" placeholder="Quantité" min="1" value="1">
+                                <button class="btn btn-primary add-to-cart mt-2">Ajouter au Panier</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card product-card" data-name="Chocolate Cake" data-price="75.00">
+                            <img src="../img/Chocolate Cake.jpeg" class="card-img-top product-img" alt="Chocolate Cake">
+                            <div class="card-body">
+                                <h5 class="card-title">Chocolate Cake</h5>
+                                <p class="card-text">75.00 AED</p>
+                                <input type="number" class="form-control quantity-input" placeholder="Quantité" min="1" value="1">
+                                <button class="btn btn-primary add-to-cart mt-2">Ajouter au Panier</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card product-card" data-name="Blueberry Muffin" data-price="20.00">
+                            <img src="../img/Blueberry Muffin.jpeg" class="card-img-top product-img" alt="Blueberry Muffin">
+                            <div class="card-body">
+                                <h5 class="card-title">Blueberry Muffin</h5>
+                                <p class="card-text">20.00 AED</p>
+                                <input type="number" class="form-control quantity-input" placeholder="Quantité" min="1" value="1">
+                                <button class="btn btn-primary add-to-cart mt-2">Ajouter au Panier</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card product-card" data-name="Lemon Tart" data-price="30.00">
+                            <img src="../img/Lemon Tart.jpeg" class="card-img-top product-img" alt="Lemon Tart">
+                            <div class="card-body">
+                                <h5 class="card-title">Lemon Tart</h5>
+                                <p class="card-text">30.00 AED</p>
+                                <input type="number" class="form-control quantity-input" placeholder="Quantité" min="1" value="1">
+                                <button class="btn btn-primary add-to-cart mt-2">Ajouter au Panier</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card product-card" data-name="Vanilla Cupcake" data-price="15.00">
+                            <img src="../img/Vanilla Cupcake.jpeg" class="card-img-top product-img" alt="Vanilla Cupcake">
+                            <div class="card-body">
+                                <h5 class="card-title">Vanilla Cupcake</h5>
+                                <p class="card-text">15.00 AED</p>
+                                <input type="number" class="form-control quantity-input" placeholder="Quantité" min="1" value="1">
+                                <button class="btn btn-primary add-to-cart mt-2">Ajouter au Panier</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title mb-4 text-primary">Votre Panier</h3>
+                        <ul id="cart" class="list-group mb-3"></ul>
+                        <h4 class="mb-4">Total: <span id="total" class="text-success">0</span> AED</h4>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button id="cancel" class="btn btn-outline-danger mr-2">Annuler Commande</button>
+                            <button id="checkout" class="btn btn-outline-success">Finaliser la Vente</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+    <script>
+
+
+// Function to toggle dark mode
+function toggleDarkMode() {
+            document.body.classList.add('dark-mode');
+            // Save the user's preference in localStorage or a cookie
+        }
+        
+        // Function to toggle light mode
+        function toggleLightMode() {
+            document.body.classList.remove('dark-mode');
+            // Save the user's preference in localStorage or a cookie
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const cart = document.getElementById('cart');
+            const totalDisplay = document.getElementById('total');
+            let total = 0;
+            const items = [];
+    
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', () => {
+                    const card = button.closest('.product-card');
+                    const productName = card.getAttribute('data-name');
+                    const productPrice = parseFloat(card.getAttribute('data-price'));
+                    const quantityInput = card.querySelector('.quantity-input');
+                    const quantity = parseInt(quantityInput.value);
+    
+                    if (isNaN(quantity) || quantity <= 0) {
+                        alert("Veuillez entrer une quantité valide.");
+                        return;
+                    }
+    
+                    const listItem = document.createElement('li');
+                    listItem.className = 'list-group-item';
+                    listItem.textContent = `${productName} - ${quantity} x ${productPrice.toFixed(2)} AED = ${(productPrice * quantity).toFixed(2)} AED`;
+    
+                    cart.appendChild(listItem);
+    
+                    total += productPrice * quantity;
+                    totalDisplay.textContent = total.toFixed(2);
+    
+                    items.push({
+                        name: productName,
+                        quantity: quantity,
+                        price: productPrice,
+                        total: productPrice * quantity
+                    });
+                });
+            });
+    
+            document.getElementById('checkout').addEventListener('click', () => {
+                if (total > 0) {
+                    const { jsPDF } = window.jspdf;
+                    const doc = new jsPDF();
+    
+                    doc.setFontSize(20);
+                    doc.text("ayCake", 105, 10, null, null, "center");
+                    doc.setFontSize(12);
+                    doc.text(`Date: ${new Date().toLocaleString()}`, 10, 20);
+                    doc.text("Facture de Vente", 105, 30, null, null, "center");
+    
+                    let yPosition = 40;
+                    items.forEach((item, index) => {
+                        doc.text(`${index + 1}. ${item.name} - ${item.quantity} x ${item.price.toFixed(2)} AED = ${item.total.toFixed(2)} AED`, 10, yPosition);
+                        yPosition += 10;
+                    });
+    
+                    doc.text(`Total: ${total.toFixed(2)} AED`, 10, yPosition + 10);
+                    doc.save("facture.pdf");
+    
+                    cart.innerHTML = '';
+                    total = 0;
+                    totalDisplay.textContent = total.toFixed(2);
+                    items.length = 0;
+                } else {
+                    alert('Le panier est vide.');
+                }
+            });
+    
+            document.getElementById('cancel').addEventListener('click', () => {
+                cart.innerHTML = '';
+                total = 0;
+                totalDisplay.textContent = total.toFixed(2);
+                items.length = 0;
+            });
+        });
+    </script>
+    
+</body>
+</html>
